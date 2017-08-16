@@ -8,19 +8,18 @@ Param(
 #Enable TLS 1.2
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-$url = "https://api.nasa.gov/planetary/apod?api_key=$ApiKey"
-$result = Invoke-RestMethod -Uri $url -Method Get;
-
-$webclient = New-Object System.Net.WebClient
-
 #Create directory if it doesn't exist
 If (!(test-path $StorageDir)) {
     New-Item -ItemType Directory -Force -Path $StorageDir
 }
 
+$url = "https://api.nasa.gov/planetary/apod?api_key=$ApiKey"
+$result = Invoke-RestMethod -Uri $url -Method Get;
+
 $fileName = "apod.jpg"
 $file = "$StorageDir\$fileName"
 
+$webclient = New-Object System.Net.WebClient
 $webclient.DownloadFile($result.hdurl, $file)
 
 Add-Type @"

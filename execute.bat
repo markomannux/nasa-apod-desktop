@@ -1,6 +1,8 @@
-
 @echo off
 IF "%1"=="" GOTO BLANK
+
+type header.txt
+
 
 powershell -executionpolicy remotesigned -Noninteractive -Command ".\main.ps1 -s \"%1""
 GOTO DONE
